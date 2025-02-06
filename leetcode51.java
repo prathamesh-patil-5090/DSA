@@ -9,7 +9,7 @@ public class leetcode51 {
             for (int j = 0; j < kingList.get(0).size(); j++) {
                 System.out.print(kingList.get(i).get(j) + " ");
             }
-            System.out.println(); // New line after each row
+            System.out.println();
         }
     }
     public static List<List<String>> solveNQueens(int n) {
