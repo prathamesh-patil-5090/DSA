@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-public class Tree {
+public class BinaryTree {
 
     public static void main(String[] args) {
-        Tree tree = new Tree();
+        BinaryTree tree = new BinaryTree();
         Scanner sc = new Scanner(System.in);
         tree.populate(sc);
         tree.display();
