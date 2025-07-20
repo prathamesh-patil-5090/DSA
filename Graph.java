@@ -179,4 +179,61 @@ class Graph {
         }
     }
 
+    //Shortest Path in unweighted graphs
+    public void shortestPathUnweighted(int start){
+        Map<Integer, Integer> dist = new HashMap<>();
+        Queue<Integer> q = new LinkedList<>();
+        dist.put(start, 0);
+        q.add(start);
+        while(!q.isEmpty()){
+            int curr = q.poll();
+            for(Pair neighbour : adj.getOrDefault(curr, new ArrayList<>())){
+                if(!dist.containsKey(neighbour.node)){
+                    dist.put(neighbour.node, dist.get(curr));
+                    q.add(neighbour.node);
+                }
+            }
+        }
+        System.out.println("Shortest Path (Unweighted) from " + start + " : " + dist);
+    }
+
+    //Dijkstra's Algorith to find shortest path in weighted graph
+    public void dijkstra(int start){
+        Map<Integer, Integer> dist = new HashMap<>();
+        for(int node : adj.keySet()){
+            dist.put(node, Integer.MAX_VALUE);
+        }
+        dist.put(start, 0);
+        PriorityQueue<Pair> pq = new PriorityQueue<>(Comparator.comparing(p -> p.weight));
+        pq.add(new Pair(start, 0));
+
+        while(!pq.isEmpty()){
+            Pair curr = pq.poll();
+            if(curr.weight > dist.get(curr.node)) continue;
+            for(Pair neighbour : adj.get(curr.node)){
+                int newDist = neighbour.weight + dist.get(curr.node);
+                if(newDist < dist.get(neighbour.node)){
+                    dist.put(neighbour.node, newDist);
+                    pq.add(new Pair(neighbour.node, newDist));
+                }
+            }
+        }
+        System.out.println("Dijkstra from : " + start + ": " + dist);
+    }
+
+    public static void main(String[] args) {
+        Graph g = new Graph(false);
+        g.addEdge(1, 2, 1);
+        g.addEdge(1, 3, 1);
+        g.addEdge(2, 4, 1);
+        g.addEdge(3, 4, 1);
+        g.addEdge(4, 5, 1);
+
+        g.dfs(1);
+        g.bfs(1);
+        System.out.println("Has Cycle (Undirected): " + g.hasCycleUndirected());
+
+        g.shortestPathUnweighted(1);
+        g.dijkstra(1);
+    }
 }
